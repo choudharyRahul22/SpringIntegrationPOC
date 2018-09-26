@@ -1,0 +1,2 @@
+# SpringIntegrationPOC
+Spring Integration POC
