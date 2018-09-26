@@ -10,6 +10,15 @@
 .springBeans
 .sts4-cache
 
+###STS###
+.mvn/
+.settings/
+target/
+.classpath
+.project
+mvnw
+mvnw.cmd
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
