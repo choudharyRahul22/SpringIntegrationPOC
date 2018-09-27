@@ -5,8 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.3.xsd">
 
-
-	<!-- Spring Bean -->
-	<bean id="printService" class="com.integration.PrintService"/>
+	
+	<int:channel id="messageChannel"></int:channel>	
 
 </beans>
