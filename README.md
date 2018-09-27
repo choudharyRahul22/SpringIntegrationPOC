@@ -7,3 +7,5 @@ Channels Types:
 
 Pollable Channel has : QueueChannel and PriorityQueueChannel Implementation.
 Subscribe Channel has : DirectChannel and PublishSubscribeChannel Implementation.
+
+Bridge: To connect multiple channels like Pollable to Subscribe channel
