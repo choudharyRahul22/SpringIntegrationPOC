@@ -31,7 +31,12 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 	public void run(ApplicationArguments arg0) throws Exception {
 		List<Future<Message<String>>> futures = new ArrayList<Future<Message<String>>>();
 		for (int x = 0; x < 10 ; x++) {
+			// Router will route to stringChannel
 			Message<String> message = MessageBuilder.withPayload("Printing message for - " + x).setHeader("messageNumber", x).build();
+			
+			// Router will route to intChannel
+			/*Message<?> message = MessageBuilder.withPayload(x).setHeader("messageNumber", x).build();*/
+			
 			this.gateway.print(message);
 		}
 		
