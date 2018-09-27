@@ -6,13 +6,21 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.3.xsd">
 
 	
-	<int:channel id="inputChannel"></int:channel>
+	
+	<!-- Endpoint Sender -->
+	<int:gateway default-request-channel="inputChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
+	
+	<!-- Channel -->
+	<int:channel id="inputChannel">
+		<int:queue capacity="10"></int:queue>
+	</int:channel>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
 	
-	<!-- Service Activator is 1 type of end point which connects a bean to input channel,
-		 which takes message from channel and connect the bean we refer-->
-	<int:service-activator input-channel="inputChannel" ref="printService" method="print"
-						   ></int:service-activator>
+	<!-- Endpoint Receiver  -->
+	<int:service-activator input-channel="inputChannel" ref="printService" method="print">
+		<!-- Used to connect endpoint to pollable channel, poll every 5 seconds, 2 message per poll -->
+		<int:poller fixed-rate="5" time-unit="SECONDS" max-messages-per-poll="2"/>
+	</int:service-activator>
 
 </beans>
