@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.core.MessagingTemplate;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHandler;
@@ -28,8 +29,6 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 	@Autowired
 	private DirectChannel inputChannel;
 	
-	@Autowired
-	private DirectChannel outputChannel;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIntegrationApplication.class, args);
@@ -38,20 +37,20 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 
-		/*
-		 * Subscription should be done before sending
-		 */
-		outputChannel.subscribe(new MessageHandler() {
-			@Override
-			public void handleMessage(Message<?> message) throws MessagingException {
-				System.out.println(message);
-			}
-		});
-
 		Message<String> message = MessageBuilder.withPayload("Using builder design pattern").setHeader("key", "value")
 				.setHeader("key2", "value2").build();
 
-		inputChannel.send(message);
+		/*
+		 * Messaging Template is used when we need to send the message within our application.
+		 * We don't need to create a new channel for reply that we get from print service.
+		 * 
+		 * we use sendAndRecive method to send as well as recive the message.
+		 * 
+		 * we if see the console we find that messaging template has temporary reply and error channel
+		 * using which it get back the reply.	
+		 */
+		Message returnMessage = new MessagingTemplate().sendAndReceive(inputChannel,message);
+		System.out.println(returnMessage);
 
 	}
 }

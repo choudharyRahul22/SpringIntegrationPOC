@@ -7,13 +7,12 @@
 
 	
 	<int:channel id="inputChannel"></int:channel>
-	<int:channel id="outputChannel"></int:channel>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
 	
 	<!-- Service Activator is 1 type of end point which connects a bean to input channel,
 		 which takes message from channel and connect the bean we refer-->
 	<int:service-activator input-channel="inputChannel" ref="printService" method="print"
-						   output-channel="outputChannel"></int:service-activator>	
+						   ></int:service-activator>
 
 </beans>
