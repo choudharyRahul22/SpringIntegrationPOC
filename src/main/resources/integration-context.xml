@@ -12,8 +12,13 @@
 	<!-- Endpoint Sender -->
 	<int:gateway default-request-channel="pollableChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
 	
+	<bean id="interceptor" class="com.integration.CustomChannelInterceptor"/>
+	
 	<int:channel id="pollableChannel">
 		<int:queue capacity="10"/>
+		<int:interceptors >
+			<int:ref bean="interceptor"/>
+		</int:interceptors>
 	</int:channel>
 	
 	<int:bridge input-channel="pollableChannel" output-channel="inputChannel">
