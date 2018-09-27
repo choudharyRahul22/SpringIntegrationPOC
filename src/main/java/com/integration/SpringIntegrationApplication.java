@@ -30,7 +30,7 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
 		
-		String[] names = {"Rahul Choudhary", "Shalu Choudhary"};
+		String[] names = {"Rahul Choudhary", "Shalu Baliyan"};
 		List<Future<Message<String>>> futures = new ArrayList<Future<Message<String>>>();
 		for (int x = 0; x < names.length ; x++) {
 			

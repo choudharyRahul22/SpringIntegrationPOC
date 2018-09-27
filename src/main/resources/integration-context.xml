@@ -18,9 +18,10 @@
 	
 	<int:splitter ref="customSplitter" input-channel="inputChannel" output-channel="aggChannel"/>
 	
-	<int:aggregator input-channel="aggChannel" output-channel="outputChannel"></int:aggregator>
+	<int:aggregator ref="customAggregator" input-channel="aggChannel" output-channel="outputChannel"/>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
+	<bean class="com.integration.CustomAggregator" id="customAggregator"/>
 	
 	<!-- Endpoint Receiver 1 -->
 	<int:service-activator order="1" input-channel="outputChannel" ref="printService" method="print"/>
