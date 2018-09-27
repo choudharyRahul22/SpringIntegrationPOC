@@ -32,7 +32,7 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 		List<Future<Message<String>>> futures = new ArrayList<Future<Message<String>>>();
 		for (int x = 0; x < 10 ; x++) {
 			// In set header change the value int or string that will match in <int:mapping value="int" channel="intChannel"/>
-			Message<?> message = MessageBuilder.withPayload(x).setHeader("messageNumber", x).setHeader("header", "string").build();
+			Message<?> message = MessageBuilder.withPayload(x).build();
 			
 			this.gateway.print(message);
 		}

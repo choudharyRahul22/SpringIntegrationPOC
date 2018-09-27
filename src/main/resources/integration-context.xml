@@ -10,10 +10,8 @@
 	<!-- Endpoint Sender -->
 	<int:gateway default-request-channel="inputChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
 	
-	<int:recipient-list-router input-channel="inputChannel" default-output-channel="deafultChannel">
-		<int:recipient selector-expression="payload.equals(1)" channel="intChannel"/>
-		<int:recipient selector-expression="payload.equals(2)" channel="stringChannel"/>
-	</int:recipient-list-router>
+	<bean class="com.integration.CustomRouter" id="customRouter"></bean>
+	<int:router ref="customRouter" input-channel="inputChannel"/>
 	
 	<int:channel id="inputChannel"></int:channel>
 	<int:channel id="deafultChannel"></int:channel>
