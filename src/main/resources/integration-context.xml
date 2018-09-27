@@ -12,6 +12,7 @@
 	
 	<!-- Channel -->
 	<int:channel id="inputChannel">
+		<!-- FIFO  -->
 		<int:queue capacity="10"></int:queue>
 	</int:channel>
 	
