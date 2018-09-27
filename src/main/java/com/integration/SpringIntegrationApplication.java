@@ -31,7 +31,20 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 	public void run(ApplicationArguments arg0) throws Exception {
 		List<Future<Message<String>>> futures = new ArrayList<Future<Message<String>>>();
 		for (int x = 0; x < 10 ; x++) {
-			Message<String> message = MessageBuilder.withPayload("Printing message for - " + x).setHeader("messageNumber", x).build();
+			/*
+			 * Higher Priority Message will be processes first in PriorityChannel
+			 * 
+			 * We can define priority either on message using setPriority method or 
+			 * we can create a custom class and refer in <int:priority-queue capacity="10" comparator="customComparator"/>
+			 */
+			
+			/*
+			 * Message<String> message = MessageBuilder.withPayload("Printing message for - " + x).setHeader("messageNumber", x).setPriority(x).build();
+			*/
+			
+			
+			Message<String> message = MessageBuilder.withPayload("Printing message for - " + x).setHeader("messageNumber", x).setPriority(x).build();
+			
 			System.out.println("Sending message - " + x);
 			futures.add(this.gateway.print(message));
 		}
