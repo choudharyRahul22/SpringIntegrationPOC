@@ -13,9 +13,9 @@
 	<int:channel id="inputChannel"></int:channel>
 	<int:channel id="outputChannel"></int:channel>
 	
-	<bean class="com.integration.CustomFilter" id="customFilter"/>
+	<bean class="com.integration.CustomSplitter" id="customSplitter"/>
 	
-	<int:filter ref="customFilter" input-channel="inputChannel" output-channel="outputChannel"></int:filter>
+	<int:splitter ref="customSplitter" input-channel="inputChannel" output-channel="outputChannel"/>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
 	
