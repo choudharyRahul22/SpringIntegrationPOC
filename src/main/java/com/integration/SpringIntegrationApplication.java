@@ -32,7 +32,12 @@ public class SpringIntegrationApplication implements ApplicationRunner{
 		
 		Message<String> message = new GenericMessage<String>("This is playload", headers);*/
 		
-		Message<String> message = MessageBuilder.withPayload("Using builder design pattern").setHeader("key", "value").build();
+		
+		/* Using Builder Pattern */
+		Message<String> message = MessageBuilder.withPayload("Using builder design pattern")
+												.setHeader("key", "value")
+												.setHeader("key2", "value2")
+												.build();
 		
 		PrintService service = new PrintService();
 		service.print(message);
