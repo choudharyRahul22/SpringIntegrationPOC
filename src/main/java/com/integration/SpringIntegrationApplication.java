@@ -29,10 +29,12 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments arg0) throws Exception {
+		
+		String[] names = {"Rahul Choudhary", "Shalu Choudhary"};
 		List<Future<Message<String>>> futures = new ArrayList<Future<Message<String>>>();
-		for (int x = 0; x < 1 ; x++) {
-			// In set header change the value int or string that will match in <int:mapping value="int" channel="intChannel"/>
-			Message<?> message = MessageBuilder.withPayload("Rahul Choudhary").build();
+		for (int x = 0; x < names.length ; x++) {
+			
+			Message<?> message = MessageBuilder.withPayload(names[x]).build();
 			
 			this.gateway.print(message);
 		}
