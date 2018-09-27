@@ -18,12 +18,18 @@ import org.springframework.messaging.MessagingException;
 @ImportResource("integration-context.xml")
 public class SpringIntegrationApplication implements ApplicationRunner {
 
-	@Autowired
 	/*
 	 * Direct Channel is a simple type of channel that connect 2 end point and
 	 * they are directly connected.
+	 * 
+	 * Bean defined in xml inputChannel is injected here
+	 * 
 	 */
-	private DirectChannel channel;
+	@Autowired
+	private DirectChannel inputChannel;
+	
+	@Autowired
+	private DirectChannel outputChannel;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIntegrationApplication.class, args);
@@ -35,18 +41,17 @@ public class SpringIntegrationApplication implements ApplicationRunner {
 		/*
 		 * Subscription should be done before sending
 		 */
-		channel.subscribe(new MessageHandler() {
+		outputChannel.subscribe(new MessageHandler() {
 			@Override
 			public void handleMessage(Message<?> message) throws MessagingException {
-				PrintService service = new PrintService();
-				service.print((Message<String>) message);
+				System.out.println(message);
 			}
 		});
 
 		Message<String> message = MessageBuilder.withPayload("Using builder design pattern").setHeader("key", "value")
 				.setHeader("key2", "value2").build();
 
-		channel.send(message);
+		inputChannel.send(message);
 
 	}
 }
