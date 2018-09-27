@@ -10,23 +10,15 @@
 	<!-- Endpoint Sender -->
 	<int:gateway default-request-channel="inputChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
 	
-	<bean class="com.integration.CustomRouter" id="customRouter"></bean>
-	<int:router ref="customRouter" input-channel="inputChannel"/>
-	
 	<int:channel id="inputChannel"></int:channel>
-	<int:channel id="deafultChannel"></int:channel>
+	<int:channel id="outputChannel"></int:channel>
+	
+	<int:filter expression="payload.equals(4)" input-channel="inputChannel" output-channel="outputChannel"></int:filter>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
-	<bean class="com.integration.NumericPrintService" id="numericPrintService"/>
-	<bean class="com.integration.DefaultService" id="defaultService"></bean>
 	
 	<!-- Endpoint Receiver 1 -->
-	<int:service-activator order="1" input-channel="stringChannel" ref="printService" method="print"/>
+	<int:service-activator order="1" input-channel="outputChannel" ref="printService" method="print"/>
 	
-	<!-- Endpoint Receiver 2 -->
-	<int:service-activator order="2" input-channel="intChannel" ref="numericPrintService" method="print"/>
-	
-	<!-- Endpoint Receiver 3 -->
-	<int:service-activator order="3" input-channel="deafultChannel" ref="defaultService" method="print"/>
 
 </beans>
