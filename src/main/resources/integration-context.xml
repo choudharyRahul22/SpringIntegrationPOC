@@ -10,20 +10,18 @@
 	<!-- Endpoint Sender -->
 	<int:gateway default-request-channel="inputChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
 	
-	<bean class="com.integration.CustomMessageComparator" id="customComparator"></bean>
 	
 	<!-- Channel -->
 	<int:channel id="inputChannel">
-		<!-- Priority  -->
-		<int:priority-queue capacity="10" comparator="customComparator"/>
+		<int:dispatcher failover="false" max-subscribers="2" load-balancer="round-robin"/>
 	</int:channel>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
+	<bean class="com.integration.UpperCasePrintService" id="upperCasePrintService"/>
 	
 	<!-- Endpoint Receiver  -->
-	<int:service-activator input-channel="inputChannel" ref="printService" method="print">
-		<!-- Used to connect endpoint to pollable channel, poll every 5 seconds, 2 message per poll -->
-		<int:poller fixed-rate="10" time-unit="SECONDS" max-messages-per-poll="2"/>
-	</int:service-activator>
+	<int:service-activator order="2" input-channel="inputChannel" ref="printService" method="print"/>
+	
+	<int:service-activator order="1" input-channel="inputChannel" ref="upperCasePrintService" method="print"/>
 
 </beans>
