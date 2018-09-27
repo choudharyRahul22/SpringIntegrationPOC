@@ -10,20 +10,25 @@
 	<!-- Endpoint Sender -->
 	<int:gateway default-request-channel="inputChannel" service-interface="com.integration.PrintGateway"></int:gateway>	
 	
-	<int:header-value-router input-channel="inputChannel" header-name="header">
-		<int:mapping value="int" channel="intChannel"/>
-		<int:mapping value="string" channel="stringChannel"/>
-	</int:header-value-router>
+	<int:recipient-list-router input-channel="inputChannel" default-output-channel="deafultChannel">
+		<int:recipient selector-expression="payload.equals(1)" channel="intChannel"/>
+		<int:recipient selector-expression="payload.equals(2)" channel="stringChannel"/>
+	</int:recipient-list-router>
 	
 	<int:channel id="inputChannel"></int:channel>
+	<int:channel id="deafultChannel"></int:channel>
 	
 	<bean class="com.integration.PrintService" id="printService"/>
 	<bean class="com.integration.NumericPrintService" id="numericPrintService"/>
+	<bean class="com.integration.DefaultService" id="defaultService"></bean>
 	
 	<!-- Endpoint Receiver 1 -->
 	<int:service-activator order="1" input-channel="stringChannel" ref="printService" method="print"/>
 	
 	<!-- Endpoint Receiver 2 -->
 	<int:service-activator order="2" input-channel="intChannel" ref="numericPrintService" method="print"/>
+	
+	<!-- Endpoint Receiver 3 -->
+	<int:service-activator order="3" input-channel="deafultChannel" ref="defaultService" method="print"/>
 
 </beans>

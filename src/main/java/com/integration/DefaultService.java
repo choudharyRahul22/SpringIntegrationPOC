@@ -2,9 +2,10 @@ package com.integration;
 
 import org.springframework.messaging.Message;
 
-public class PrintService {
-
+public class DefaultService {
+	
 	public void print(Message<?> message){
-		System.out.println(message.getPayload());
+		System.out.println("Default : " + message.getPayload());
 	}
+
 }
